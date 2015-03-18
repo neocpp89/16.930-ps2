@@ -14,3 +14,11 @@ function scaplot(mesh,u,clim,nref,pltmesh,surf)
 %    SURF:       0 - Normal 2D view
 %                1 - 3D View
 %
+p=mesh.p;
+t=mesh.t;
+
+hh=[];
+pars={'facecolor','interp','edgecolor','k','Linew',1};
+clf,hh=[hh;patch('faces',t,'vertices',p,'FaceVertexCData',u,pars{:})];
+view(2),axis equal
+end
