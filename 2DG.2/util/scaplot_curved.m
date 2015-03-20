@@ -1,6 +1,7 @@
 function scaplot_curved(mesh,u,clim,nref,pltmesh,surf)
 %SCAPLOT_CURVED  Plot Scalar function with curved mesh
 %    SCAPLOT_CURVED(MESH,U,CLIM,NREF,PLTMESH,SURF)
+%    XXX: This function is always slow! Use the non-curved version if possible.
 %
 %    MESH:       Mesh structure
 %    U:          Scalar fucntion to be plotted: U(npl,nt)
@@ -10,7 +11,7 @@ function scaplot_curved(mesh,u,clim,nref,pltmesh,surf)
 %    NREF:       Number of refinements used for plotting (default=0)
 %    PLTMESH:    0 - do not plot mesh
 %                1 - plot mesh with straight edges 
-%                2 - plot mesh with curved edges (slow)
+%                2 - plot mesh with curved edges
 %    SURF:       0 - Normal 2D view
 %                1 - 3D View
 %
