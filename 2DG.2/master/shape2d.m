@@ -12,6 +12,14 @@ function nsf=shape2d(porder,plocal,pts)
 %                 nsf(:,2,:) shape functions derivatives w.r.t. x
 %                 nsf(:,3,:) shape functions derivatives w.r.t. y
 %
+
+% It looks like plocal is actually (1-r-s, r, s), not just (r,s) like I
+% thought... Something is strange here I think. I will change it to what I
+% want so it doesn't screw stuff up later.
+if (size(plocal, 2) == 3)
+    plocal = plocal(:,2:3);
+end
+
 [V, ~] = koornwinder2d(plocal, porder);
 [P, DPX, DPY] = koornwinder2d(pts, porder);
 VT_inv = (V')^(-1);

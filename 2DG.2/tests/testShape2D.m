@@ -1,5 +1,5 @@
 classdef testShape2D < matlab.unittest.TestCase
-    % Tests 1D shape functions on master element
+    % Tests 2D shape functions on master element
     % I only test first-order because I know how to calculate those easily.
     
     methods (Test)
