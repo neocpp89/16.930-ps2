@@ -30,11 +30,10 @@ for nt=1:size(mesh.t, 1)
     f = abs(faces);
     xy(:,:) = mesh.dgnodes(:,:,nt);
     xg = phimat'*xy;
-    for ip=1:size(master.shap, 1)
-        J(:,:,ip) = squeeze(jj(ip,:,:))*xy;
+    for ig=1:size(master.shap, 1)
+        J(:,:,ig) = squeeze(jj(ig,:,:))*xy;
     end
     J
-    xg
     %{
     dxgdx = dphixmat'*xy;
     dxgdy = dphiymat'*xy;
@@ -59,24 +58,24 @@ for nt=1:size(mesh.t, 1)
                 for p=1:size(J,3)
                     J_inv = J(:,:,p)^(-1);
                     J_inv
-                    n(p,:) = (J_inv*[-1;0])';
-                    t(p,:) = (J_inv*[0;-1])';
+                    n(p,:) = (J_inv*[1;1]/sqrt(2))';
+                    t(p,:) = (J_inv*[-1;1]/sqrt(2))';
                     %n(p,:) = n(p,:)/norm(n(p,:))
                 end
             case 2
                 for p=1:size(J,3)
                     J_inv = J(:,:,p)^(-1);
                     J_inv
-                    n(p,:) = (J_inv*[0;-1])';
-                    t(p,:) = (J_inv*[1;0])';
+                    n(p,:) = (J_inv*[-1;0])';
+                    t(p,:) = (J_inv*[0;-1])';
                     %n(p,:) = n(p,:)/norm(n(p,:))
                 end
             case 3
                 for p=1:size(J,3)
                     J_inv = J(:,:,p)^(-1);
                     J_inv
-                    n(p,:) = (J_inv*[1;1]/sqrt(2))';
-                    t(p,:) = (J_inv*[-1;1]/sqrt(2))';
+                    n(p,:) = (J_inv*[0;-1])';
+                    t(p,:) = (J_inv*[1;0])';
                     %n(p,:) = n(p,:)/norm(n(p,:))
                 end
         end
