@@ -36,30 +36,9 @@ for nt=1:size(mesh.dgnodes,3)
 end
 
 % Method two. Use the divergence theorem and calculate line integrals.
+area2 = calculateAreaFromDivergence(mesh, master);
 
-%{
-Find the normals
-xi = master.ploc1d;
-gi = master.gp1d;
-e1 = [1-xi, xi];
-e2 = [0*xi, 1-xi];
-e3 = [xi, 0*xi];
-g1 = [1-gi, gi];
-g2 = [0*gi, 1-gi];
-g3 = [gi, 0*gi];
-n1 = [1,1];
-n2 = [-1,0];
-n3 = [0,-1];
-nsf1 = shape2d(porder, e1, g1);
-nsf2 = shape2d(porder, e2, g2);
-nsf3 = shape2d(porder, e3, g3);
-%}
-area2 = calculateAreaFromDivergence(mesh, master)
-
-% Caclulate circumference with line integrals.
-perim = calculatePerimeterOfBoundary(mesh, master)
-boundary_faces = mesh.f(mesh.f(:,4) < 0, :);
-for n=1:size(boundary_faces, 1)
-end
+% Calculate circumference with line integrals.
+perim = calculatePerimeterOfBoundary(mesh, master);
 
 end
