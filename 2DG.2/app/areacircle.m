@@ -57,7 +57,7 @@ nsf3 = shape2d(porder, e3, g3);
 area2 = calculateAreaFromDivergence(mesh, master)
 
 % Caclulate circumference with line integrals.
-perim = 0
+perim = calculatePerimeterOfBoundary(mesh, master)
 boundary_faces = mesh.f(mesh.f(:,4) < 0, :);
 for n=1:size(boundary_faces, 1)
 end
