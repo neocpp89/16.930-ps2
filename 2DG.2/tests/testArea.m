@@ -1,4 +1,4 @@
-classdef testDivergenceArea < matlab.unittest.TestCase
+classdef testArea < matlab.unittest.TestCase
     % Tests method for integrating area based on surface intgrals.
     % I only test first-order because I know how to calculate those easily.
     
@@ -8,7 +8,7 @@ classdef testDivergenceArea < matlab.unittest.TestCase
             mesh = mkmesh_master(p);
             master = mkmaster(mesh);
 
-            actual_area = calculateAreaFromDivergence(mesh, master);
+            actual_area = calculateArea(mesh, master);
             expected_area = 0.5;
             testCase.verifyEqual(actual_area, expected_area,'Abstol',1e-10);
         end
@@ -19,7 +19,7 @@ classdef testDivergenceArea < matlab.unittest.TestCase
             master = mkmaster(mesh);
             mesh.dgnodes = mesh.dgnodes*2.124 + 022.41;
 
-            actual_area = calculateAreaFromDivergence(mesh, master);
+            actual_area = calculateArea(mesh, master);
             expected_area = 0.5*2.124*2.124;
             testCase.verifyEqual(actual_area, expected_area,'Abstol',1e-10);
         end
@@ -29,7 +29,7 @@ classdef testDivergenceArea < matlab.unittest.TestCase
             mesh = mkmesh_master(p);
             master = mkmaster(mesh);
             mesh.dgnodes = [0.2649, 0.4600; -0.2649, 0.4600; -0.0000, -0.0021];
-            actual_area = calculateAreaFromDivergence(mesh, master);
+            actual_area = calculateArea(mesh, master);
 
             corners = mesh.dgnodes;
             dista = sqrt(sum((corners(1,:)-corners(2,:)).^2));

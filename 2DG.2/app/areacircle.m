@@ -15,30 +15,12 @@ mesh = mkmesh_circle(siz,porder);
 master = mkmaster(mesh);
 
 % Method one. Just calculate volume integrals like you would think.
-% There's probably a way to vectorize this, but I'm not so good with matlab.
-phimat(:,:) = master.shap(:,1,:);
-dphixmat(:,:) = master.shap(:,2,:);
-dphiymat(:,:) = master.shap(:,3,:);
-area1 = 0;
-for nt=1:size(mesh.dgnodes,3)
-    xy(:,:) = mesh.dgnodes(:,:,nt);
-    xg = phimat'*xy;
-    dxgdx = dphixmat'*xy;
-    dxgdy = dphiymat'*xy;
-    J(1, 1, :) = dxgdx(:, 1);
-    J(1, 2, :) = dxgdx(:, 2);
-    J(2, 1, :) = dxgdy(:, 1);
-    J(2, 2, :) = dxgdy(:, 2);
-    for g=1:size(J, 3)
-        detJ(g, 1) = det(J(:,:,g));
-    end
-    area1 = area1 + sum(master.gwgh .* detJ);
-end
+area1 = calculateArea(mesh, master);
 
 % Method two. Use the divergence theorem and calculate line integrals.
 area2 = calculateAreaFromDivergence(mesh, master);
 
 % Calculate circumference with line integrals.
-perim = calculatePerimeterOfBoundary(mesh, master);
+perim = calculatePerimeter(mesh, master);
 
 end

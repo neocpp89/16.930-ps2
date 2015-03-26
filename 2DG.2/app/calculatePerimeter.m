@@ -1,4 +1,4 @@
-function [S] = calculatePerimeterOfBoundary(mesh, master)
+function [S] = calculatePerimeter(mesh, master)
     phimat(:,:) = master.shap(:,1,:);
     dphixmat(:,:) = master.shap(:,2,:);
     dphiymat(:,:) = master.shap(:,3,:);
