@@ -21,4 +21,5 @@ function [] = createLiftAndDragPlots(mesh, alpha)
     set(h, 'PaperPosition',[0 0 pos(3) pos(4)]);
     title('Cp at 10 degrees');
     print('Cp.pdf', '-dpdf');
+    print('Cp.png', '-dpng');
 end

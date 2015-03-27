@@ -17,5 +17,5 @@ function [] = createLiftAndDragPlots(alpharange)
     ylabel('Lift or Drag Coefficient');
     title('Lift and Drag vs Angle');
     legend('Drag Coefficient','Lift Coefficient','Analytical Lift Coefficient', 'Location', 'northwest');
-    print('DragAndLift.pdf', '-dpdf');
+    print('LiftAndDrag.pdf', '-dpdf');
 end

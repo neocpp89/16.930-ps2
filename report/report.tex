@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{siunitx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+\begin{document}
+\author{Sachith Dunatunga}
+\title{16.930 PS2}
+\maketitle
+
+\section{Area and Perimeter of a Circle}
+As before, the code to generate everything is available online at github at \url{https://github.com/neocpp89/16.930-ps2}.
+
+The tables \ref{tbl:area1}, \ref{tbl:area2}, and \ref{tbl:perimeter} look mostly as expected, but the cubic seems to be off.
+Looking at the difference tables in tables \ref{tbl:diffarea1}, \ref{tbl:diffarea2}, and \ref{tbl:diffperimeter} we see that there is indeed something strange.
+I believe the calculation of the jacobian or normal must be done incorrectly, but my simple, lower order tests were not able to see the problem.
+
+\input{circletable.tex}
+
+\section{Airfoil}
+We see from figure \ref{fig:liftanddrag} that aside from a small blip at $\alpha = -3$, the analytical lift coefficient and the computed coefficient from differentiation the potential are very close together.
+I expected less drag, but I don't have any real mathematical basis for that assumption (I know that in stokes flow, you don't get drag forces due to time reversibility, so I expected that to happen here).
+I do see that there is a singularity at the trailing edge, and the pressure coefficient goes crazy there, so there is probably error due to that.
+
+I cut down to range of the scalar plot (shown in figure \ref{fig:Cp}) for $\alpha = 10$ due to the aforementioned singularity at the trailing edge.
+
+\begin{figure}
+\centering
+\includegraphics[scale=1.0]{LiftAndDrag.pdf}
+\caption{The lift and drag coefficients as a function of angle of attack. The numerics closely match analytical results except the very first data point.}
+\label{fig:liftanddrag}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=1.0]{Cp.png}
+\caption{The scalar plot of the pressure coefficient. The range was truncated due to the singularity at the trailing edge.} 
+\label{fig:Cp}
+\end{figure}
+
+\end{document}
