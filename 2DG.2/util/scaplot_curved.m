@@ -26,14 +26,11 @@ tlocal=mesh.tlocal;
 plocal=mesh.plocal;
 porder=double(mesh.porder);
 
-U = u(mesh.t);
-PU = plocal*U';
 if (whichopts(2) && nref>0)
   A0=koornwinder(plocal(:,1:2),porder);
   [plocal,tlocal]=uniref(plocal,tlocal,nref);
   A=koornwinder(plocal(:,1:2),porder)/A0;
   dgnodes=reshape(A*reshape(dgnodes,size(A0,1),[]),size(A,1),2,[]);
-  PU=A*PU;
 end
 
 e=boundedges(plocal(:,2:3),tlocal);
@@ -52,7 +49,7 @@ end
 for it=1:nt
   px=dgnodes(:,1,it);
   py=dgnodes(:,2,it);
-  pu=PU(:, it);
+  pu=u(:, it);
   if (whichopts(1) && ~isempty(clim))
     pu(pu < clim(1)) = clim(1);
     pu(pu > clim(2)) = clim(2);

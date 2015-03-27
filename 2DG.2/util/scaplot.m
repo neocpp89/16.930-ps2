@@ -43,6 +43,7 @@ if ((whichopts(2) && nref ~= 0) || (whichopts(3) && pltmesh == 2))
 else
     p=mesh.p;
     t=mesh.t;
+    ma = mkmaster(mesh);
     hh=[];
     pars={'facecolor','interp'};
     noedgeline_pars = {'edgecolor', 'none'};
@@ -57,15 +58,16 @@ else
         end
     end
     clipped_u = u;
-    if (whichopts(4) == 1)
-        if (whichopts(1) && ~isempty(clim))
-            clipped_u(u < clim(1)) = clim(1);
-            clipped_u(u > clim(2)) = clim(2);
-            % the clipping automatically sets the axis as well.
-        end
-        p = [p, clipped_u];
+    if (whichopts(1) && ~isempty(clim))
+        clipped_u(u < clim(1)) = clim(1);
+        clipped_u(u > clim(2)) = clim(2);
+        % the clipping automatically sets the axis as well.
     end
-    clf,hh=[hh;patch('faces',t,'vertices',p,'FaceVertexCData',clipped_u,pars{:})];
+    %clf,hh=[hh;patch('faces',t,'vertices',p,'FaceVertexCData',clipped_u,pars{:})];
+    xx(:,:) = mesh.dgnodes(ma.corner,1,:);
+    yy(:,:) = mesh.dgnodes(ma.corner,2,:);
+    clipped_u = clipped_u(ma.corner, :);
+    clf,hh=[hh;patch(xx,yy,zeros(size(yy)), clipped_u,pars{:})];
     colorbar;
     if (whichopts(4) && surf == 1)
         view(3);
