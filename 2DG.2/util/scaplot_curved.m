@@ -31,6 +31,7 @@ if (whichopts(2) && nref>0)
   [plocal,tlocal]=uniref(plocal,tlocal,nref);
   A=koornwinder(plocal(:,1:2),porder)/A0;
   dgnodes=reshape(A*reshape(dgnodes,size(A0,1),[]),size(A,1),2,[]);
+  u = A*u;
 end
 
 e=boundedges(plocal(:,2:3),tlocal);
