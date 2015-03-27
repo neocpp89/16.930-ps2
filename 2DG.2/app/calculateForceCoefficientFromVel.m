@@ -1,6 +1,10 @@
-function [S] = calculatePerimeter(mesh, master, whichboundary)
-    if nargin < 3
+function [Cf] = calculateForceCoefficientFromVel(mesh, master, vel, whichboundary, c)
+    if nargin < 4
         whichboundary = 1;
+        c = 4
+    end
+    if nargin < 5
+        c = 4
     end
     phimat(:,:) = master.shap(:,1,:);
     dphixmat(:,:) = master.shap(:,2,:);
@@ -12,12 +16,13 @@ function [S] = calculatePerimeter(mesh, master, whichboundary)
     nsf(2,:,:,:) = shape2d(master.porder, master.plocal, [zeros(size(master.gp1d)), 1.-0.5.*(1.+master.gp1d)]);
     nsf(3,:,:,:) = shape2d(master.porder, master.plocal, [0.5.*(1.+master.gp1d), zeros(size(master.gp1d))]);
 
-    S = 0;
+    Cf = [0, 0];
     for nt=1:size(mesh.t, 1)
         faces(:, 1) = mesh.t2f(nt, :);
         cw = (faces < 0);
         f = abs(faces);
         xy(:,:) = mesh.dgnodes(:,:,nt);
+        velxy(:,:) = vel(:,:,nt);
         for nf=1:size(faces,1)
             ff = abs(faces(nf));
             if (mesh.f(ff, 4) ~= -whichboundary)
@@ -36,24 +41,31 @@ function [S] = calculatePerimeter(mesh, master, whichboundary)
                     for p=1:size(line_J,3)
                         line_J_p = line_J(:,:,p);
                         line_J_inv = line_J_p^(-1);
+                        n(p,:) = (line_J_inv*[-1;0])';
                         ds(p, 1) = sqrt(sum((line_J_p'*[0;-1]).^2));
                     end
                 case 3
                     for p=1:size(line_J,3)
                         line_J_p = line_J(:,:,p);
                         line_J_inv = line_J_p^(-1);
+                        n(p,:) = (line_J_inv*[0;-1])';
                         ds(p, 1) = sqrt(sum((line_J_p'*[1;0]).^2));
                     end
                 case 1
                     for p=1:size(line_J,3)
                         line_J_p = line_J(:,:,p);
                         line_J_inv = line_J_p^(-1);
+                        n(p,:) = (line_J_inv*[1;1])';
                         ds(p, 1) = sqrt(sum((line_J_p'*[-1;1]).^2));
                     end
             end
+            ng = normr(n);
             dsg = ds;
-            dS = master.gw1d'*dsg;
-            S = S + dS;
+            line_velxy = squeeze(nsf(nf,:,1,:))'*velxy;
+            Cp = 1 - sum(line_velxy.^2,2);
+            dCf = master.gw1d'*(diag(Cp.*dsg)*ng);
+            Cf = Cf + dCf;
         end
     end
+    Cf = Cf ./ 4;
 end

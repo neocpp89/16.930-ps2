@@ -70,7 +70,7 @@ Gamma = -real(dphidw/dvortdw);
 
 phi = -V*r*(w*exp(-i*alphef) + 1./(w*exp(-i*alphef)));
 vort = i*Gamma*log(w)/(2*pi);
-psi = imag(phi+vort);
+psi = -imag(phi+vort);
 
 %Find trailing edge
 ii = find(abs(w-1)<1.e-6);
@@ -97,10 +97,4 @@ end
 
 velx = -real(dphi);
 vely =  imag(dphi);
-
-
-
-
-
-
-
+end
