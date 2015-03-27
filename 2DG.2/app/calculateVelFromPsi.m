@@ -1,6 +1,5 @@
 function [vel] = calculateVelFromPsi(mesh, master, psi)
     nsf = shape2d(master.porder, master.plocal, master.plocal(:,2:3));
-    disp(master.plocal)
 
     for nt=1:size(mesh.t, 1)
         xy(:,:) = mesh.dgnodes(:,:,nt);

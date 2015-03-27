@@ -1,10 +1,10 @@
 function [Cf] = calculateForceCoefficientFromVel(mesh, master, vel, whichboundary, c)
     if nargin < 4
         whichboundary = 1;
-        c = 4
+        c = 4;
     end
     if nargin < 5
-        c = 4
+        c = 4;
     end
     phimat(:,:) = master.shap(:,1,:);
     dphixmat(:,:) = master.shap(:,2,:);

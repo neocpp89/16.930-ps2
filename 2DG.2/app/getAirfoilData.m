@@ -1,5 +1,7 @@
-function [psi,vel_analytic,gamma_analytic] = getAirfoilData(alpha)
-    mesh = mkmesh_trefftz(15,30,3);
+function [psi,vel_analytic,gamma_analytic] = getAirfoilData(alpha, mesh)
+    if (nargin < 2)
+        mesh = mkmesh_trefftz(15,30,3);
+    end
     master = mkmaster(mesh);
 
     mx = mesh.dgnodes(:,1,:);
